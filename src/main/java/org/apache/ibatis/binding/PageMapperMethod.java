@@ -27,6 +27,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.nerv.framework.persistence.annotation.Pagination;
 import org.nerv.framework.util.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 public class PageMapperMethod {
 
@@ -64,9 +65,8 @@ public class PageMapperMethod {
         	 throw new BindingException("commandCountName is null");
          }
          
-         PageRequest pageRequest = (PageRequest) getPageRequestParam(args);
+         Pageable pageRequest = (Pageable) getPageRequestParam(args);
          Object param = getSelectParam(args);
-         
          
          // select
          List<Object> resultList = sqlSession.selectList(commandName,
@@ -97,7 +97,7 @@ public class PageMapperMethod {
   
   private Object getPageRequestParam(Object[] args){
 	  for (int i = 0; i < args.length; i++) {
-		if(args[i] instanceof PageRequest){
+		if(args[i] instanceof Pageable){
 			return args[i];
 		}
 	  }
